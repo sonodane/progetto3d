@@ -50,6 +50,26 @@
     animation: shine 3s infinite;
 }
 
+/* Stile per il form */
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    display: none; /* Nascondi inizialmente */
+}
+
+.form-container input, 
+.form-container textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+
 @keyframes shine {
     0% { transform: rotate(0deg) translate(-30%, -30%); }
     100% { transform: rotate(360deg) translate(-30%, -30%); }
