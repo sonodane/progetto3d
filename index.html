@@ -62,10 +62,16 @@
     <div id="canvas-container"></div>
     <!-- Form HTML che appare sopra la scena 3D -->
 <div class="form-container">
+    <!-- Aggiungi questo nel tuo index.html -->
+
+    <h2>Lascia il tuo feedback</h2>
     <form id="feedbackForm">
-        <!-- Campi per nome, email e messaggio -->
-        <button>Invia</button>
+        <input type="text" name="name" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" placeholder="Il tuo feedback sull'esperienza 3D..." required></textarea>
+        <button type="submit">Invia</button>
     </form>
+
 </div>
     <div id="info">
         <h1>Esplora lo Spazio 3D</h1>
