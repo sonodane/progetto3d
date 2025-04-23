@@ -10,7 +10,12 @@ const addObjectBtn = document.getElementById('addObject');
 const toggleAnimationBtn = document.getElementById('toggleAnimation');
 
 init();
-
+// Funzione che salva i dati su GitHub
+async function saveToGitHub(data) {
+    // 1. Legge il file CSV esistente
+    // 2. Aggiunge una nuova riga
+    // 3. Aggiorna il file via API GitHub
+}
 function init() {
     // Creazione della scena
     scene = new THREE.Scene();
