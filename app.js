@@ -43,7 +43,20 @@ async function submitToGitHub(data) {
 
     return response.json();
 }
-
+// Nel tuo app.js
+function showForm() {
+    document.querySelector('.form-container').style.display = 'block';
+    // Pausa l'animazione 3D
+    isAnimating = false;
+}
+// Leggi e visualizza i feedback come oggetti 3D
+async function loadFeedback() {
+    const response = await fetch('https://raw.githubusercontent.com/TUO_USERNAME/NOME_REPO/main/feedback/data.csv');
+    const data = await response.text();
+    // Crea testo 3D con Three.js
+    data.split('\n').forEach(createTextMesh);
+}
+// Aggiungi un pulsante 3D che chiama showForm()
 // Gestisci submit del form
 document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
     e.preventDefault();
