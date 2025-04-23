@@ -10,12 +10,55 @@ const addObjectBtn = document.getElementById('addObject');
 const toggleAnimationBtn = document.getElementById('toggleAnimation');
 
 init();
-// Funzione che salva i dati su GitHub
-async function saveToGitHub(data) {
-    // 1. Legge il file CSV esistente
-    // 2. Aggiunge una nuova riga
-    // 3. Aggiorna il file via API GitHub
+async function submitToGitHub(data) {
+    const repoOwner = 'TUO_USERNAME';
+    const repoName = 'NOME_REPO';
+    const filePath = 'feedback/data.csv';
+    const token = 'TUO_TOKEN_GITHUB'; // Usa un token con permessi repo
+
+    // Leggi il file esistente
+    const existingData = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+        headers: { 'Authorization': `token ${token}` }
+    }).then(res => res.json()).catch(() => null);
+
+    let csvContent = 'Name,Email,Message,Timestamp\n';
+    
+    if (existingData && existingData.content) {
+        csvContent = atob(existingData.content.replace(/\n/g, ''));
+    }
+
+    // Aggiungi nuova riga
+    csvContent += `${data.name},${data.email},"${data.message}",${new Date().toISOString()}\n`;
+
+    // Aggiorna il file
+    const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `token ${token}` },
+        body: JSON.stringify({
+            message: 'Aggiunto feedback',
+            content: btoa(csvContent),
+            sha: existingData?.sha
+        })
+    });
+
+    return response.json();
 }
+
+// Gestisci submit del form
+document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    
+    try {
+        await submitToGitHub(data);
+        alert('Grazie per il feedback!');
+        e.target.reset();
+    } catch (error) {
+        console.error(error);
+        alert('Errore nell\'invio');
+    }
+});
 function init() {
     // Creazione della scena
     scene = new THREE.Scene();
