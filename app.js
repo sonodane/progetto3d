@@ -59,6 +59,8 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
         alert('Errore nell\'invio');
     }
 });
+// In produzione, usa variabili d'ambiente
+const token = process.env.GITHUB_TOKEN; 
 function init() {
     // Creazione della scena
     scene = new THREE.Scene();
